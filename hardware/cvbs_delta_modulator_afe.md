@@ -3,7 +3,8 @@
 > Historical initial topology. The later working NEO FAMI setup added AC
 > coupling and input bias, so the direct-coupled schematic below is not the
 > complete verified wiring. See the current README milestone and check the
-> actual circuit/pin mapping before making hardware changes.
+> actual circuit/pin mapping before making hardware changes. The current
+> record is [Working AC-coupled CVBS front end](cvbs_ac_coupled_afe.md).
 
 Status: **LAB PROTOTYPE / MEASUREMENT REQUIRED**
 

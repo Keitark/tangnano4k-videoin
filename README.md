@@ -27,6 +27,68 @@ prototype, not a calibrated or lossless video digitizer.
 recordings used an external HDMI capture device. Earlier USB-related modules
 are experimental and must not be mistaken for a working USB camera product.
 
+## Working circuit: AC-coupled CVBS input
+
+The hand-wired NEO FAMI prototype uses **four resistors and two capacitors**
+outside the Tang Nano 4K. The owner confirmed the fitted feedback capacitor
+as **33 pF** on September 14, 2026. This documents the reported bench assembly;
+it is not a vendor-qualified ADC circuit or a production safety approval.
+
+```text
+                                               Tang Nano 4K
+                              board 3.3 V
+                                  |
+                              R2 33 kohm
+                                  |
+Yellow RCA center --+-- (+ C1 -) --+---------- FPGA pin 39 / LVDS+
+                    |    4.7 uF   |
+                 R1 75 ohm    R3 10 kohm
+                    |             |
+Yellow RCA shell ---+-------------+---------- board GND
+
+FPGA pin 16 / 1.8 V GPIO -- R4 2 kohm --+---- FPGA pin 40 / LVDS-
+                                       |
+                                    C2 33 pF
+                                       |
+                                    board GND
+```
+
+| Part | Value | Connection / role |
+|---|---|---|
+| R1 | 75 ohm | RCA center to ground, **before** C1; video termination |
+| C1 | 4.7 uF electrolytic | Series video coupling: **positive to RCA**, negative to the biased pin-39 node, for this source |
+| R2 | 33 kohm | Board 3.3 V to pin-39 node; upper bias resistor |
+| R3 | 10 kohm | Pin-39 node to ground; lower bias resistor |
+| R4 | 2 kohm | Pin 16 to pin-40 node; one-bit feedback resistor |
+| C2 | **33 pF** | Pin-40 node to ground; feedback capacitor, non-polarized |
+
+The unloaded bias is approximately `3.3 x 10 / (33 + 10) = 0.767 V`.
+Pin 40 is the **feedback node**, not ground and not the RCA shield. Do not
+short pins 39 and 40 together. All ground symbols are the same electrical net.
+
+| Signal | FPGA package pin | Board header reference |
+|---|---|---|
+| Video input, LVDS+ | **39** | P7 pin 6 |
+| Feedback node, LVDS- | **40** | P7 pin 7 |
+| Feedback output, LVCMOS18 | **16** | P6 pin 13 |
+| Common ground | GND | P6 pin 20 |
+
+Numbers 39/40/16 identify **FPGA package pins**, not positions counted along a
+header. Check the board revision, silkscreen and continuity before connecting.
+Disconnect the camera module/ribbon, which shares these nets. Use the board's
+labeled **3.3 V** supply for R2, not 5 V or the feedback GPIO.
+
+**Polarity and safety:** C1's polarity above follows the NEO FAMI's recorded
+higher source-side DC voltage. It is not universal for other composite sources;
+check voltage across a polarized capacitor, including startup/shutdown. A
+multimeter average cannot establish peak input voltage or safe common-mode
+range. Never connect an active source to an unpowered FPGA, and power off
+before changing wiring. Keep R4/C2 and their ground return very short. Do not
+enable internal 100-ohm termination across the LVDS inputs.
+
+See [the complete circuit notes](hardware/cvbs_ac_coupled_afe.md) for exact
+node connections, operating principle, voltage-domain checks and limitations.
+
 ### Build the verified color configuration
 
 Use the required Gowin toolchain (recorded baseline: Gowin 1.9.8) and the
@@ -51,9 +113,10 @@ authorized. A fresh build is not automatically hardware-verified.
 - `rtl/`: sampling, NTSC decoder, line storage, HDMI and experimental USB HDL.
 - `constraints/`: pin and timing constraints; `tb/`: simulation testbenches.
 - `tools/`: build scripts, capture analysis and test helpers.
-- [Front-end history](hardware/cvbs_delta_modulator_afe.md): initial circuit
-  notes, **not the complete later AC-coupled wiring**. Do not wire directly
-  from an old experiment without checking the current circuit and pin map.
+- [Working AC-coupled front end](hardware/cvbs_ac_coupled_afe.md): circuit,
+  parts, polarity and pin mapping.
+- [Front-end history](hardware/cvbs_delta_modulator_afe.md): superseded
+  direct-coupled experiment, not the current wiring instructions.
 
 This private repository contains source and selected text evidence. Vendor
 tool packages, generated bitstreams, recordings, machine/driver diagnostics
@@ -62,7 +125,8 @@ records are provenance references, not files included in this repository.
 No new project-wide license is granted by this initial upload; retain any
 existing third-party notices and review licensing before public distribution.
 
-## Historical bring-up notes (not the current recommended build)
+<details>
+<summary>Historical bring-up notes (not the current recommended build or wiring)</summary>
 
 The following original notes are preserved for context. In particular, the
 two-buffer description and direct-coupled three-component wiring below refer
@@ -193,3 +257,5 @@ See `IMPLEMENTATION_PLAN.md` for the current staged plan. On C6/I5 it starts
 with protected composite sync capture and a resource-measured USB full-speed
 branch. USB high speed remains gated on a physically verified C7/I6-or-faster
 device and exact-target generated IP.
+
+</details>
