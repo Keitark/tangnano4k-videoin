@@ -1,0 +1,40 @@
+# This repository is a curated source snapshot, not a workstation backup.
+/*
+!/.gitignore
+!/.gitattributes
+!/AGENTS.md
+!/README.md
+!/HANDOFF.md
+!/IMPLEMENTATION_PLAN.md
+!/rtl/
+!/constraints/
+!/tb/
+!/hardware/
+!/tools/
+!/evidence/
+!/assets/
+
+# Preserve relevant tools without redistributing bundled executables or
+# workstation-specific device/driver repair automation.
+/tools/*
+!/tools/*.tcl
+!/tools/*.py
+!/tools/test_*.ps1
+!/tools/program_verified_sram.ps1
+
+# Curated milestone records only; captures and raw workstation logs stay local.
+/evidence/*
+!/evidence/color-three-line-verified-20260913.md
+!/evidence/color-three-line-checkpoint-20260913.md
+!/evidence/color-noise-improvement-20260913.md
+
+**/__pycache__/
+*.pyc
+*.vcd
+*.fst
+*.vvp
+*.log
+.env
+.env.*
+*.pem
+*.key

@@ -1,0 +1,9 @@
+# Same synchronizer exceptions as the normal image, with wrapper hierarchy.
+# Bank selection is constant zero and has no synchronizer in snapshot mode.
+create_clock -name clk_27m -period 37.037 [get_ports {clk_27m}]
+set_false_path -to [get_pins {core/hdmi/line_toggle_meta_s0/D core/hdmi/lock_meta_s0/D}]
+set_false_path -to [get_pins {core/hdmi/phase_error_meta_8_s0/D core/hdmi/phase_error_meta_7_s0/D core/hdmi/phase_error_meta_6_s0/D core/hdmi/phase_error_meta_5_s0/D core/hdmi/phase_error_meta_4_s0/D core/hdmi/phase_error_meta_3_s0/D core/hdmi/phase_error_meta_2_s0/D core/hdmi/phase_error_meta_1_s0/D core/hdmi/phase_error_meta_0_s0/D core/hdmi/period_meta_5_s0/D core/hdmi/period_meta_4_s0/D core/hdmi/period_meta_3_s0/D core/hdmi/period_meta_2_s0/D core/hdmi/period_meta_1_s0/D core/hdmi/period_meta_0_s0/D}]
+set_false_path -to [get_pins {core/hdmi/sync_width_meta_7_s0/D core/hdmi/sync_width_meta_6_s0/D core/hdmi/sync_width_meta_5_s0/D core/hdmi/sync_width_meta_4_s0/D core/hdmi/sync_width_meta_3_s0/D core/hdmi/sync_width_meta_2_s0/D core/hdmi/sync_width_meta_1_s0/D core/hdmi/sync_width_meta_0_s0/D}]
+set_false_path -to [get_pins {core/hdmi/black_level_meta_7_s0/D core/hdmi/black_level_meta_6_s0/D core/hdmi/black_level_meta_5_s0/D core/hdmi/black_level_meta_4_s0/D core/hdmi/black_level_meta_3_s0/D core/hdmi/black_level_meta_2_s0/D core/hdmi/black_level_meta_1_s0/D core/hdmi/black_level_meta_0_s0/D core/hdmi/luma_level_meta_7_s0/D core/hdmi/luma_level_meta_6_s0/D core/hdmi/luma_level_meta_5_s0/D core/hdmi/luma_level_meta_4_s0/D core/hdmi/luma_level_meta_3_s0/D core/hdmi/luma_level_meta_2_s0/D core/hdmi/luma_level_meta_1_s0/D core/hdmi/luma_level_meta_0_s0/D}]
+set_false_path -to [get_pins {core/sync_meta_s0/D}]
+set_false_path -to [get_pins {core/hdmi/serializers[0]/RESET core/hdmi/serializers[1]/RESET core/hdmi/serializers[2]/RESET}]

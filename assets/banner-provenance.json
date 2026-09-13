@@ -1,0 +1,22 @@
+{
+  "source": "20260913_234452_silent.mp4",
+  "source_sha256": "405d6ce476d30314d9006f889cbdd0a907fff5936577f661f05d36b97ec3bcf7",
+  "source_frame_seconds": 0.8,
+  "classification": "engineering-evidence",
+  "authorization": "Owner supplied video and requested repository header.",
+  "rights": "Private project use; no new rights in depicted third-party demo content granted.",
+  "transform": "HDR-to-SDR tone mapping, crop, proportional resize, deterministic title overlay",
+  "crop_xywh": [
+    405,
+    0,
+    1150,
+    750
+  ],
+  "dimensions": [
+    1600,
+    700
+  ],
+  "output_sha256": "ede1185ce9f685ac6cad237133d1edecbcc4b4cb3e2df87539cd4cf62b3b0536",
+  "renderer": "tools/make_repo_banner.py",
+  "generated_hardware_imagery": false
+}
