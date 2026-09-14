@@ -4,6 +4,7 @@
 !/.gitattributes
 !/AGENTS.md
 !/README.md
+!/LICENSE
 !/HANDOFF.md
 !/IMPLEMENTATION_PLAN.md
 !/rtl/
