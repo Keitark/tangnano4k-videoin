@@ -116,6 +116,34 @@ See the [hardware verification evidence](evidence/color-three-line-verified-2026
 | Processing after ADC | Numeric ADC output | Sync recovery, burst-referenced chroma decoding, RGB565 conversion and three-line-buffer HDMI output |
 | Accuracy evidence | SNR/ENOB examples in Table 5.1 | Working video captures; no calibrated ENOB, SNR or analog-bandwidth measurement |
 
+### Sigma-delta / RC-feedback signal flow
+
+The shared one-bit feedback idea and this project's video-specific extension
+are shown below. The RC path is the analog feedback/integration element; the
+digital path performs reconstruction and video processing.
+
+```mermaid
+flowchart LR
+    source["CVBS source<br/>or sensor input"] --> cmp["1-bit comparator<br/>(external or LVDS)"]
+    fb["Feedback voltage"] --> cmp
+    cmp --> bit["Sampled one-bit<br/>stream"]
+    bit --> drive["GPIO feedback<br/>output"]
+    drive --> rc["External R-C<br/>low-pass network"]
+    rc --> fb
+    bit --> filt["Digital reconstruction<br/>filter + decimation"]
+    filt --> lattice["Lattice-style result:<br/>decimated numeric output"]
+    filt --> cvbs["This project:<br/>13.5 MS/s CVBS samples"]
+    cvbs --> ntsc["NTSC sync +<br/>burst/color decode"]
+    ntsc --> lines["RGB565 +<br/>three line buffers"]
+    lines --> hdmi["640x480 HDMI"]
+```
+
+For the verified Tang Nano implementation, the comparator is the Gowin LVDS
+input, the feedback GPIO is pin 16, and the external feedback network is the
+2 kOhm / 33 pF path to the pin-40 node. The picture path uses two cascaded
+16-sample moving sums before 8:1 downsampling; the sync path uses a separate
+64-sample moving window.
+
 The major difference is **the bandwidth/averaging tradeoff and the complete
 video pipeline**, not merely a faster FPGA. Lattice's roughly 7.6 kSamples/s
 figure is one filter configuration, **not a maximum Lattice-device sample
@@ -160,7 +188,7 @@ authorized. A fresh build is not automatically hardware-verified.
 - [Front-end history](hardware/cvbs_delta_modulator_afe.md): superseded
   direct-coupled experiment, not the current wiring instructions.
 
-This private repository contains source and selected text evidence. Vendor
+This public repository contains source and selected text evidence. Vendor
 tool packages, generated bitstreams, recordings, machine/driver diagnostics
 and personal working files remain local. Paths to those files in historical
 records are provenance references, not files included in this repository.
