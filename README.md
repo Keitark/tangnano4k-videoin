@@ -164,8 +164,10 @@ This private repository contains source and selected text evidence. Vendor
 tool packages, generated bitstreams, recordings, machine/driver diagnostics
 and personal working files remain local. Paths to those files in historical
 records are provenance references, not files included in this repository.
-No new project-wide license is granted by this initial upload; retain any
-existing third-party notices and review licensing before public distribution.
+The original project files are released under the [MIT License](LICENSE).
+Retain any existing third-party notices; vendor documents, tool packages,
+generated artifacts, recordings and other third-party materials remain subject
+to their own terms.
 
 <details>
 <summary>Historical bring-up notes (not the current recommended build or wiring)</summary>
