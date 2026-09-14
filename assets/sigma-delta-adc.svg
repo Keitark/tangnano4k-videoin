@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" font-size="17" role="img" aria-labelledby="title desc">
+  <title id="title">Tang Nano 4K simple sigma-delta video ADC</title>
+  <desc id="desc">Conditioned CVBS enters the positive LVDS comparator input. A 108 MHz flip-flop feeds GPIO pin 16 through a 2 kohm resistor to the negative input, with 33 pF to ground. A separate two-register measurement path supplies picture and sync filters and 8:1 downsampling. The reconstructed samples feed NTSC decoding, three line buffers and HDMI.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#20252b"/></marker>
+  </defs>
+  <rect width="1200" height="640" fill="white"/>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="30" y="32" font-size="21" font-weight="bold">Simple sigma-delta / RC-feedback ADC for composite video</text>
+  <rect x="285" y="65" width="765" height="405" fill="none" stroke="#69747e" stroke-width="1.5"/>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="305" y="94" font-weight="bold">Tang Nano 4K FPGA</text>
+
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="30" y="105" font-weight="bold">NTSC analog input</text>
+  <rect x="30" y="130" width="190" height="80" fill="#f0f2f4" stroke="#20252b" stroke-width="1.6"/>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="125" y="154" text-anchor="middle">75 ohm termination</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="125" y="177" text-anchor="middle">4.7 uF AC coupling</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="125" y="200" text-anchor="middle">33k / 10k DC bias</text>
+  <path d="M220 170 H310" fill="none" stroke="#20252b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="232" y="155" font-size="15">Pin 39</text>
+
+  <path d="M310 140 L310 260 L410 200 Z" fill="#e2e6ea" stroke="#20252b" stroke-width="1.8"/>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="323" y="178" font-size="24">+</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="323" y="239" font-size="24">−</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="330" y="123" font-weight="bold">LVDS comparator</text>
+  <path d="M410 200 H500" fill="none" stroke="#20252b" stroke-width="2" marker-end="url(#arrow)"/>
+  <circle cx="445" cy="200" r="4" fill="#20252b"/>
+
+  <rect x="500" y="160" width="155" height="80" fill="#f0f2f4" stroke="#20252b" stroke-width="1.6"/>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="577" y="187" text-anchor="middle">Sampling element</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="577" y="213" text-anchor="middle">D flip-flop</text>
+  <path d="M523 240 L531 229 L539 240" fill="none" stroke="#20252b" stroke-width="2"/>
+  <path d="M531 257 V240" fill="none" stroke="#20252b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="545" y="262" font-size="15">108 MHz clock</text>
+  <path d="M655 200 H685 V400 H275" fill="none" stroke="#20252b" stroke-width="2"/>
+  <path d="M275 400 H263 L257 390 L245 410 L233 390 L221 410 L209 390 L203 400 H145" fill="none" stroke="#20252b" stroke-width="2"/>
+  <path d="M145 400 V230 H310" fill="none" stroke="#20252b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="693" y="195" font-size="15">Pin 16</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="702" y="219" font-size="15">1.8 V GPIO</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="350" y="390">One-bit feedback</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="210" y="379" font-size="15">2 kohm</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="218" y="252" font-size="15">Pin 40</text>
+  <circle cx="145" cy="400" r="4" fill="#20252b"/>
+  <path d="M145 400 V431 M126 431 H164 M126 441 H164 M145 441 V456 M125 456 H165 M131 463 H159 M138 470 H152" fill="none" stroke="#20252b" stroke-width="2"/>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="45" y="441">33 pF</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="30" y="495" font-size="15">External feedback R and C</text>
+
+  <path d="M445 200 V315 H500" fill="none" stroke="#20252b" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="500" y="285" width="155" height="65" fill="#f0f2f4" stroke="#20252b" stroke-width="1.6"/>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="577" y="310" text-anchor="middle">Measurement</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="577" y="333" text-anchor="middle">2 register stages</text>
+  <!-- Bridge over the independent feedback wire at x=685. -->
+  <path d="M677 315 C681 305 689 305 693 315 H750" fill="white" stroke="white" stroke-width="7"/>
+  <path d="M655 315 H677 C681 305 689 305 693 315 H750" fill="none" stroke="#20252b" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="750" y="245" width="250" height="145" fill="#f0f2f4" stroke="#20252b" stroke-width="1.6"/>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="875" y="270" text-anchor="middle" font-weight="bold">Digital reconstruction</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="875" y="297" text-anchor="middle">Picture: 16-point + 16-point</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="875" y="318" text-anchor="middle">cascaded moving sums</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="875" y="343" text-anchor="middle">Sync: 64-point moving sum</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="875" y="373" text-anchor="middle" font-weight="bold">Then decimate each by 8</text>
+  <path d="M1000 315 H1160" fill="none" stroke="#20252b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="1060" y="275" font-weight="bold">Digital out</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="1060" y="298" font-size="15">13.5 MS/s</text>
+  <path d="M1125 315 V490 H365 V530" fill="none" stroke="#20252b" stroke-width="2" marker-end="url(#arrow)"/>
+  <circle cx="1125" cy="315" r="4" fill="#20252b"/>
+
+  <rect x="245" y="530" width="240" height="65" fill="#f0f2f4" stroke="#20252b" stroke-width="1.6"/>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="365" y="555" text-anchor="middle">NTSC sync / burst / color</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="365" y="578" text-anchor="middle">Decode to RGB565</text>
+  <path d="M485 562 H555" fill="none" stroke="#20252b" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="555" y="530" width="220" height="65" fill="#f0f2f4" stroke="#20252b" stroke-width="1.6"/>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="665" y="555" text-anchor="middle">Three line buffers</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="665" y="578" text-anchor="middle">320 × 240 picture</text>
+  <path d="M775 562 H845" fill="none" stroke="#20252b" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="845" y="530" width="210" height="65" fill="#f0f2f4" stroke="#20252b" stroke-width="1.6"/>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="950" y="555" text-anchor="middle">HDMI transmitter</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="950" y="578" text-anchor="middle">640 × 480 output</text>
+  <text font-family="Arial,Helvetica,sans-serif" fill="#20252b" x="245" y="623" font-size="15">Video processing below is also inside the FPGA. PC recording uses an external HDMI capture device.</text>
+</svg>

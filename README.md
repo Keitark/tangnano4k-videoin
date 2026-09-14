@@ -6,6 +6,23 @@
 tone-mapped from HDR to SDR for display. Titles are presentation overlays;
 the circuit and decoded picture are real footage.*
 
+## How it works: sigma-delta / RC-feedback video input
+
+The LVDS comparator and GPIO close a one-bit feedback loop through an external
+RC network. A separate digital measurement path reconstructs the composite
+signal for NTSC color decoding and HDMI output.
+
+![Tang Nano 4K sigma-delta ADC: comparator, sampling flip-flop, RC feedback and digital reconstruction](assets/sigma-delta-adc.svg)
+
+Original drawing of our implementation, following the functional-diagram style
+of **Lattice Figure 2.1** and the DIRECT feedback topology in **Figure 5.1**
+of [Simple Sigma-Delta ADC, FPGA-RD-02047-1.6](https://www.latticesemi.com/view_document?document_id=35762).
+The comparator symbols identify the video (+) and feedback (-) inputs.
+The separate measurement branch matches our RTL. The passive RC is a low-pass
+feedback element, rather than an ideal integrator.
+See the [circuit and parts below](#working-circuit-ac-coupled-cvbs-input) and
+the [Lattice comparison](#related-work-lattice-simple-sigma-delta-adc).
+
 ## Current verified milestone — September 13, 2026
 
 Real-time **320x240 RGB565 color NTSC input to 640x480 HDMI** on the
@@ -115,34 +132,6 @@ See the [hardware verification evidence](evidence/color-three-line-verified-2026
 | Output sample rate | About 7.629 kSamples/s for that example (8,192:1 total decimation) | 13.5 MSamples/s (8:1 downsampling); overlapping filter windows, not 8 independent bits of precision |
 | Processing after ADC | Numeric ADC output | Sync recovery, burst-referenced chroma decoding, RGB565 conversion and three-line-buffer HDMI output |
 | Accuracy evidence | SNR/ENOB examples in Table 5.1 | Working video captures; no calibrated ENOB, SNR or analog-bandwidth measurement |
-
-### Sigma-delta / RC-feedback signal flow
-
-The shared one-bit feedback idea and this project's video-specific extension
-are shown below. The RC path is the analog feedback/integration element; the
-digital path performs reconstruction and video processing.
-
-```mermaid
-flowchart LR
-    source["CVBS source<br/>or sensor input"] --> cmp["1-bit comparator<br/>(external or LVDS)"]
-    fb["Feedback voltage"] --> cmp
-    cmp --> bit["Sampled one-bit<br/>stream"]
-    bit --> drive["GPIO feedback<br/>output"]
-    drive --> rc["External R-C<br/>low-pass network"]
-    rc --> fb
-    bit --> filt["Digital reconstruction<br/>filter + decimation"]
-    filt --> lattice["Lattice-style result:<br/>decimated numeric output"]
-    filt --> cvbs["This project:<br/>13.5 MS/s CVBS samples"]
-    cvbs --> ntsc["NTSC sync +<br/>burst/color decode"]
-    ntsc --> lines["RGB565 +<br/>three line buffers"]
-    lines --> hdmi["640x480 HDMI"]
-```
-
-For the verified Tang Nano implementation, the comparator is the Gowin LVDS
-input, the feedback GPIO is pin 16, and the external feedback network is the
-2 kOhm / 33 pF path to the pin-40 node. The picture path uses two cascaded
-16-sample moving sums before 8:1 downsampling; the sync path uses a separate
-64-sample moving window.
 
 The major difference is **the bandwidth/averaging tradeoff and the complete
 video pipeline**, not merely a faster FPGA. Lattice's roughly 7.6 kSamples/s
