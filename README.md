@@ -105,6 +105,32 @@ three line buffers. These are project implementation results, not a claim
 of a new ADC topology or measured accuracy superiority over Lattice's design.
 See the [hardware verification evidence](evidence/color-three-line-verified-20260913.md).
 
+| Aspect | Lattice reference design | This project's verified video configuration |
+|---|---|---|
+| Intended application | Low-frequency sensors and power-rail monitoring | Real-time color composite-video decoding |
+| ADC principle | Comparator, sampled one-bit feedback, passive RC and digital filtering | Same basic principle, using the Gowin LVDS input and GPIO feedback; not a new ADC topology |
+| Analog input | DIRECT or NETWORK topology options | DIRECT-style feedback plus 75-ohm video termination, AC coupling and DC bias; four resistors and two capacitors total |
+| Example sampling clock | 62.5 MHz in Section 5.4 | 108 MHz |
+| Digital reconstruction | Accumulate 1,024 bits, then average/decimate eight results in the documented example | Picture: two cascaded 16-sample moving sums **before** 8:1 downsampling; separate 64-sample moving sum for sync |
+| Output sample rate | About 7.629 kSamples/s for that example (8,192:1 total decimation) | 13.5 MSamples/s (8:1 downsampling); overlapping filter windows, not 8 independent bits of precision |
+| Processing after ADC | Numeric ADC output | Sync recovery, burst-referenced chroma decoding, RGB565 conversion and three-line-buffer HDMI output |
+| Accuracy evidence | SNR/ENOB examples in Table 5.1 | Working video captures; no calibrated ENOB, SNR or analog-bandwidth measurement |
+
+The major difference is **the bandwidth/averaging tradeoff and the complete
+video pipeline**, not merely a faster FPGA. Lattice's roughly 7.6 kSamples/s
+figure is one filter configuration, **not a maximum Lattice-device sample
+rate**. Our shorter, overlapping filters retain more rapidly changing signal
+content but provide much less averaging; a higher output rate does not prove
+better accuracy or faithful reconstruction across the entire Nyquist band.
+
+Calling ours a **simple sigma-delta ADC**, following Lattice's terminology,
+is reasonable. The more precise hardware description is **RC-feedback one-bit
+oversampling ADC**: a passive RC is not an ideal integrator, and the name does
+not by itself establish textbook noise shaping. The older `delta_modulator`
+HDL filenames are historical names, not evidence of a different ADC principle.
+Implementation details: [sampling/filter RTL](rtl/cvbs/delta_modulator_core.v)
+and [front-end notes](hardware/cvbs_ac_coupled_afe.md).
+
 ### Build the verified color configuration
 
 Use the required Gowin toolchain (recorded baseline: Gowin 1.9.8) and the
