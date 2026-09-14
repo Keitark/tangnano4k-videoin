@@ -89,6 +89,22 @@ enable internal 100-ohm termination across the LVDS inputs.
 See [the complete circuit notes](hardware/cvbs_ac_coupled_afe.md) for exact
 node connections, operating principle, voltage-domain checks and limitations.
 
+### Related work: Lattice Simple Sigma-Delta ADC
+
+[Lattice Semiconductor, *Simple Sigma-Delta ADC*, FPGA-RD-02047-1.6
+(December 2019)](https://www.latticesemi.com/view_document?document_id=35762)
+documents an FPGA/LVDS-comparator ADC with one-bit feedback and an external
+RC network. See **Figure 5.1, DIRECT Analog Input Topology (page 6)** and
+Sections 5.2–5.4 for the comparator, sampling element and digital filtering.
+
+Our front end uses the same basic comparator/GPIO/RC-feedback topology,
+with additional CVBS termination, AC coupling and bias. This project's
+video-specific implementation runs the comparator at 108 MHz, reconstructs
+samples at 13.5 MSamples/s, decodes NTSC color, and outputs HDMI through
+three line buffers. These are project implementation results, not a claim
+of a new ADC topology or measured accuracy superiority over Lattice's design.
+See the [hardware verification evidence](evidence/color-three-line-verified-20260913.md).
+
 ### Build the verified color configuration
 
 Use the required Gowin toolchain (recorded baseline: Gowin 1.9.8) and the
